@@ -23,10 +23,19 @@ def add_student():
 
 def print_student(student):
     for field in student:
-        print(field.capitalize(), '\t', student[field])
+        if field.find('_') != -1:
+            str_field = f'{field[:field.find("_")]} {field[(field.find("_") + 1):]}'
+            print(str_field.capitalize(), '\t', student[field])
+        else:
+            print(field.capitalize(), '\t', student[field])
+
+def print_student_list():
+    for student in STUDENTS:
+        print_student(student)
+        print('<-------------------------------------------------------->')
 
 def load_students():
-    for  test_student in TEST_STUDENTS:
+    for test_student in TEST_STUDENTS:
         STUDENTS.append(dict(zip(student_fields, test_student)))
 
 def calculate_avg_age():
@@ -50,7 +59,6 @@ while True:
     elif action == 'load':
         load_students()
     elif action == 'print':
-        for student in STUDENTS:
-            print_student(student)
+            print_student_list()
     else:
         break
