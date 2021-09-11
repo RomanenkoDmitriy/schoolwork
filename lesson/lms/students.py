@@ -14,6 +14,11 @@ def add_student():
     student = {}
     for field in student_fields:
         student[field] = input(f'Enter {field}: ')
+        if field == 'age':
+            try:
+                int(student['age'])
+            except:
+                student['age'] = input('Enter age as number\t')
     STUDENTS.append(student)
 
 def print_student(student):
@@ -31,8 +36,10 @@ def calculate_avg_age():
             total_age += int(student['age'])
         avg_age = total_age / len(STUDENTS)
         print(f'Average age is  {avg_age}')
-    except:
+    except ValueError:
         print('Cannot calculate average age')
+    except Exception as e:
+        print(str(e))
 
 while True:
     action = input('Desired action:\t')
