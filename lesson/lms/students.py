@@ -21,13 +21,7 @@ def print_student(student):
 
 def load_students():
     for  test_student in TEST_STUDENTS:
-        student = {}
-        for index in range(len(student_fields)):
-            student[student_fields[index]] = test_student[index]
-
-    STUDENTS.append(student)
-
-
+        STUDENTS.append(dict(zip(student_fields, test_student)))
 
 while True:
     action = input('Desired action:\t')
