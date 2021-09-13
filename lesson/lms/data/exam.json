@@ -1,0 +1,46 @@
+[
+  {"question": "What is primitive data type in Python?",
+    "answers": [
+      "Tuple",
+      "Structure",
+      "Integer"
+    ],
+    "correct_answer": "3"
+  },
+  {
+    "question": "Which is not a boolean value?",
+    "answers": [
+      "False",
+      "None",
+      "True"
+    ],
+    "correct_answer": "2"
+  },
+  {
+    "question": "Which collection is immutable?",
+    "answers": [
+      "Tuple",
+      "List",
+      "Dict"
+    ],
+    "correct_answer": "1"
+  },
+  {
+    "question": "What boolean value 1 corresponds to?",
+    "answers": [
+      "True",
+      "False",
+      "Do not know"
+    ],
+    "correct_answer": "1"
+  },
+  {
+    "question": "What will the code output: ('cat' + 5)?",
+    "answers": [
+      "cat5",
+      "cat cat cat cat cat",
+      "Error"
+    ],
+    "correct_answer": "3"
+  }
+]

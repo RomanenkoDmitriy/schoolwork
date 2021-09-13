@@ -26,11 +26,7 @@ def add_student():
 
 def print_student(student):
     for field in student:
-        if field.find('_') != -1:
-            str_field = f'{field[:field.find("_")]} {field[(field.find("_") + 1):]}'
-            print(str_field.capitalize(), '\t', student[field])
-        else:
-            print(field.capitalize(), '\t', student[field])
+        print(field.replace('_', ' ').capitalize(), '\t', student[field])
 
 def print_student_list():
     for student in STUDENTS:
