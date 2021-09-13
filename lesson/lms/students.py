@@ -54,21 +54,21 @@ def calculate_avg_age():
         print(str(e))
 
 def dump_students():
-    with open('student_data.json', 'w') as file:
+    with open('data/student_data.json', 'w') as file:
         json.dump(STUDENTS, file)
 
-def load_from_json(file_path='student_data.json'):
+def load_from_json(file_path='data/student_data.json'):
     with open(file_path, 'r') as file:
         STUDENTS.extend(json.load(file))
 
 def dump_csv():
-    with open('student_data.csv', 'w') as file:
+    with open('data/student_data.csv', 'w') as file:
         writer = csv.DictWriter(file, student_fields)
         writer.writeheader()
         for studetn in STUDENTS:
             writer.writerow(studetn)
 
-def load_csv(file_path='student_data.csv'):
+def load_csv(file_path='data/student_data.csv'):
     with open(file_path, 'r') as file:
         reader = csv.DictReader(file)
         for row in reader:
