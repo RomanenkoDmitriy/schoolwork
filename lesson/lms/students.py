@@ -1,3 +1,6 @@
+import json
+import csv
+
 student_fields = ['first_name', 'last_name', 'email', 'age', 'address', 'gender']
 
 STUDENTS = []
@@ -50,15 +53,45 @@ def calculate_avg_age():
     except Exception as e:
         print(str(e))
 
-while True:
-    action = input('Desired action:\t')
-    if action == 'add':
-        add_student()
-    elif action == 'age':
-        calculate_avg_age()
-    elif action == 'load':
-        load_students()
-    elif action == 'print':
-            print_student_list()
-    else:
-        break
+def dump_students():
+    with open('student_data.json', 'w') as file:
+        json.dump(STUDENTS, file)
+
+def load_from_json(file_path='student_data.json'):
+    with open(file_path, 'r') as file:
+        STUDENTS.extend(json.load(file))
+
+def dump_csv():
+    with open('student_data.csv', 'w') as file:
+        writer = csv.DictWriter(file, student_fields)
+        writer.writeheader()
+        for studetn in STUDENTS:
+            writer.writerow(studetn)
+
+def load_csv(file_path='student_data.csv'):
+    with open(file_path, 'r') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            STUDENTS.append(row)
+
+
+
+
+ACTIONS = {
+    'add': add_student,
+    'age': calculate_avg_age,
+    'load': load_students,
+    'print': print_student_list,
+    'dump_json': dump_students,
+    'load_json': load_from_json,
+    'dump_csv': dump_csv,
+    'load_csv': load_csv
+
+}
+if __name__ == '__main__':
+    while True:
+        action = input('Desired action:\t')
+        if action in ACTIONS:
+            ACTIONS.get(action)()
+        else:
+            break
