@@ -1,14 +1,14 @@
 import json
 import csv
 
-student_fields = ['first_name', 'last_name', 'email', 'age', 'address', 'gender']
+student_fields = ['first_name', 'last_name', 'email', 'age', 'address', 'gender', 'point']
 
 STUDENTS = []
 
 TEST_STUDENTS = [
-    ['Mari', 'D', 'adadad@mail.ru', '19', 'Huston', 'F'],
-    ['Jon', 's', 'hyhyhyhyh@mail.com', '21', 'London', 'M'],
-    ['Andy', 'H', 'ggggggg@mail.com', 'sexteen', 'Citi', 'M']
+    ['Mari', 'D', 'adadad@mail.ru', '19', 'Huston', 'F', 0],
+    ['Jon', 's', 'hyhyhyhyh@mail.com', '21', 'London', 'M', 0],
+    ['Andy', 'H', 'ggggggg@mail.com', 'sexteen', 'Citi', 'M', 0]
 ]
 
 
