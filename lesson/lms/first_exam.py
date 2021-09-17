@@ -23,13 +23,12 @@ def test():
 
         for answer in qest['answers']:
             print(answer)
-        answ = input('Your reply:  ')
-
+        answ = sorted(list(input('Your reply:  ')))
         if len(qest['correct_answer']) > 1:
-            if answ[0] == (qest['correct_answer'][0]) and answ[-1] == (qest['correct_answer'][1]):
+            if answ == (qest['correct_answer']):
                 point += qest['point']
         else:
-            if answ == (qest['correct_answer'][0]):
+            if answ == (qest['correct_answer']):
                 point += qest['point']
                 print(point)
 
