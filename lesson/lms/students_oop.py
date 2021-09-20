@@ -3,11 +3,9 @@ import json
 class Student:
 
     student_fields = ['first_name', 'last_name', 'email', 'age', 'address', 'gender', 'point']
+    student = {}
 
     def __init__(self):
-        self.student = {}
-
-    def add_student(self):
         for field in self.student_fields:
             self.student[field] = input(f'Enter {field}: ')
             if field == 'age':
@@ -23,7 +21,7 @@ class Student:
 
 
 class Group(Student):
-    TEST_STUDENTS = [
+    _TEST_STUDENTS = [
         ['Mari', 'D', 'adadad@mail.ru', '19', 'Huston', 'F', 0],
         ['Jon', 's', 'hyhyhyhyh@mail.com', '21', 'London', 'M', 0],
         ['Andy', 'H', 'ggggggg@mail.com', 'sexteen', 'Citi', 'M', 0]
@@ -37,7 +35,7 @@ class Group(Student):
         self.STUDENTS.append(student)
 
     def load_students(self):
-        for test_student in self.TEST_STUDENTS:
+        for test_student in self._TEST_STUDENTS:
             self.STUDENTS.append(dict(zip(self.student_fields, test_student)))
 
     def print_student_list(self):
@@ -57,24 +55,12 @@ class Group(Student):
 if __name__ == '__main__':
     student = Student()
     group = Group('beetroot')
-  #  print(student.student_fields)
-  #  print(student.add_student())
-    '''
-    student.add_student()
-    print('__________________________________________________________________________')
-    print(student.print_student())
-    print('=====================================')
-    new_student = student.student
-    print(new_student)
-    
-    group.add_student_to_group(new_student)
-    students = group.STUDENTS
-    print(students)
-    '''
 
+    student.print_student(student.student)
 
     #group.load_students()
-    group.load_from_json()
-    new_students = group.STUDENTS
-    group.print_student_list()
+    #group.load_from_json()
+    #new_students = group.STUDENTS
+    #group.print_student_list()
     #group.dump_students()
+    #student.print_student(student.student)
