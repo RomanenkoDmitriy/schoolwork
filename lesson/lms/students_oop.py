@@ -7,11 +7,14 @@ class Student:
     def __init__(self, first_name, last_name, email, age, address, gender, point=0):
         self. first_name = first_name
         self. last_name = last_name
-        self. email = email
         self.age = age
         self. address = address
         self.gender = gender
         self.point = point
+        if email[0] != '@' and email[-1] != '@' and '@' in email:
+            self._email = email
+        else:
+            raise AttributeError('Invalid email')
         Student.TOTAL_STUDENT.append({self.first_name: self})
 
 
@@ -20,6 +23,18 @@ class Student:
 
     def __eq__(self, other):
         return self.age == other.age
+
+    def __lt__(self, other):
+        return self.age < other.age
+
+    def __le__(self, other):
+        return self.age <= other.age
+
+    def __gt__(self, other):
+        return self.age > other.age
+
+    def __ge__(self, other):
+        return self.age >= other.age
 
     @classmethod
     def print_total_student(cls):
@@ -31,6 +46,17 @@ class Student:
         for key in dict_student:
             setattr(obj, key, dict_student[key])
         return obj
+
+    @property
+    def email(self):
+        return self._email
+
+    @email.setter
+    def email(self, email):
+        if email[0] != '@' and email[-1] != '@' and '@' in email:
+            self._email = email
+        else:
+            raise AttributeError('Invalid email')
 
 
 class Group(Student):
@@ -50,14 +76,10 @@ class Group(Student):
 
 
 
-#Обьект student1 создаетца и у него есть все аргументы но метод print_total_student почемуто не находит first_name
+
 
 
 if __name__ == '__main__':
     student = Student('Mari', 'Boow', 'dadada@mail.com', 21, 'qwer', 'w')
-    #student1 = Student('Bob', 'Bown', 'dadada@mail.com', 25, 'asdasa', 'm')
-    dict_st = {'first_name': 'Bob', 'last_name': 'Bown', 'email': 'ghfhfghfg@gmail.com',
-               'age': 25, 'address': 'xcvvx', 'gender': 'm', 'point': 0}
-    student1 = Student.add_student_dict(dict_st)
-    print(student == student1)
-    Student.print_total_student()
+    #student.email = 'dadadda@mdsd'
+    print(student.email)

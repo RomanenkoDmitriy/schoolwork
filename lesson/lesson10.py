@@ -1,6 +1,6 @@
 class Animal:
     paws = 4
-    tail = True
+    _tail = True
     ears = 2
 
     def __init__(self, name):
@@ -11,6 +11,25 @@ class Animal:
 
     def voice(self):
         print('Bzzzzzzzzz!!!')
+
+    @property
+    def tail(self):
+        if self._tail:
+            return 'This animal has tail'
+        else:
+            return 'This animal has no tail'
+
+    @tail.setter
+    def tail(self, tail):
+        if type(tail) is bool:
+            self._tail = tail
+        elif tail.lower() == 'yes':
+            self._tail = True
+        elif tail.lower() == 'no':
+            self._tail = False
+
+
+    #tail = property(get_tail, set_tail)
 
 
 class Cat(Animal):
@@ -82,10 +101,16 @@ if __name__ == '__main__':
     #dog1 = Dog()
     #    print(dog1)
     #    print(dog1.weight)
-    dog_data = {'name': 'Joy', 'weight': 15}
-    dog2 = Dog.from_dict(dog_data)
-    print(dog2)
-    print(dog2.weight)
+    #dog_data = {'name': 'Joy', 'weight': 15}
+   # dog2 = Dog.from_dict(dog_data)
+   # print(dog2)
+   # print(dog2.weight)
 #    cat = Cat('Murzik')
 #    print(dog1 == cat)
 #    print(cat == dog1)
+
+    bug = Animal('Bzzzz')
+    print(bug)
+    #bug.tail = 'No'
+    print(bug.tail)
+
