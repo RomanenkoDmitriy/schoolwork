@@ -11,10 +11,11 @@ class Student:
         self. address = address
         self.gender = gender
         self.point = point
-        if email[0] != '@' and email[-1] != '@' and '@' in email:
-            self._email = email
-        else:
-            raise AttributeError('Invalid email')
+        self.email = email
+        # if email[0] != '@' and email[-1] != '@' and '@' in email:
+        #     self._email = email
+        # else:
+        #     raise AttributeError('Invalid email')
         Student.TOTAL_STUDENT.append({self.first_name: self})
 
 
@@ -59,15 +60,34 @@ class Student:
             raise AttributeError('Invalid email')
 
 
-class Group(Student):
+class Group:
 
     def __init__(self, name):
-        super()
         self.name = name
         self.STUDENTS = []
 
-    def add_student_to_group(self, student):
-        self.STUDENTS.append(student)
+    def __iter__(self):
+        self.index_student = 0
+        return self
+
+    def __next__(self):
+        if self.index_student < len(self.STUDENTS):
+            _index = self.index_student
+            self.index_student += 1
+            return self.STUDENTS[_index]
+        else:
+            raise StopIteration
+
+
+    def add_student_to_group(self, *args):
+        for student in args:
+            self.STUDENTS.append(student)
+
+#         В каком варианте лучьше реализововать данный код?
+
+    # def add_student_to_group(self, *args):
+    #     for student in Student.TOTAL_STUDENT:
+    #         self.STUDENTS.append(student)
 
     def print_student_list(self):
         for student in self.STUDENTS:
@@ -81,5 +101,16 @@ class Group(Student):
 
 if __name__ == '__main__':
     student = Student('Mari', 'Boow', 'dadada@mail.com', 21, 'qwer', 'w')
-    #student.email = 'dadadda@mdsd'
-    print(student.email)
+    student1 = Student('Joi', 'Boow', 'dadada@mail.com', 22, 'qwer', 'm')
+    student2 = Student('Bob', 'Boow', 'dadada@mail.com', 20, 'qwer', 'm')
+    student3 = Student('Mik', 'Boow', 'dadada@mail.com', 23, 'qwer', 'm')
+    student4 = Student('Ann', 'Boow', 'dadada@mail.com', 22, 'qwer', 'w')
+
+    group = Group('beetroot')
+
+    group.add_student_to_group(student, student1, student2, student3, student4)
+
+    iter_group = iter(group)
+    for student in iter_group:
+        print(student)
+    #group.print_student_list()
