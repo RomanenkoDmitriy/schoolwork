@@ -83,7 +83,7 @@ class Group:
         for student in args:
             self.STUDENTS.append(student)
 
-#         В каком варианте лучьше реализововать данный код?
+#         В каком варианте лучьше реализововать добовление студентов в группу?
 
     # def add_student_to_group(self, *args):
     #     for student in Student.TOTAL_STUDENT:
