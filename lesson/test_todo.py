@@ -36,6 +36,24 @@ class TestTask(unittest.TestCase):
         task.priority = 20
         self.assertEqual(task.priority, 1)
 
+    def test_task_str(self):
+        task = Task('My test task')
+        output = str(task)
+        self.assertEqual(output, 'My test task')
+
+    @patch('builtins.input', return_value='My test task')
+    def test_print_all_task(self, mock_input):
+        dashboard = Dashboard()
+        dashboard.add_task()
+        self.assertEqual(str(dashboard.print_all_tasks()), 'My test task')
+
+
+
+    def test_print_tasks_by_priority(self):
+        dashboard = Dashboard()
+        dashboard.add_task()
+        task_priority = dashboard.print_tasks_by_priority()
+        self.assertEqual(len(task_priority), 1)
 
 
 if __name__ == '__main__':
