@@ -75,13 +75,13 @@ class TestTask(unittest.TestCase):
 
     @patch('builtins.input', return_value='tag')
     def test_completed_task(self, mock_input):
-        task = Task('Task1', 'tag')
-        task.done = True
+        task1 = Task('Task1', 'tag')
+        task1.done = True
         task2 = Task('Task2', 'tag1')
         dashboard = Dashboard()
-        dashboard.task_list.extend([task, task2])
+        dashboard.task_list.extend([task1, task2])
         for task in dashboard.completed_task():
-            self.assertEqual(task, task)
+            self.assertEqual(task, task1)
 
 
 
