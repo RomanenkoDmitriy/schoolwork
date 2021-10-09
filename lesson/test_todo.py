@@ -68,10 +68,21 @@ class TestTask(unittest.TestCase):
 
 
     def test_tag_search(self):
-
+        task = Task('Task1', 'tag')
+        task2 = Task('Task2', 'tag1')
+        dashboard = Dashboard()
+        dashboard.task_list.extend([task, task2])
+        self.assertNotEqual(len(dashboard.tag_search('tag')), 0)
 
     def test_completed_task(self):
-        pass
+        task = Task('Task1', 'tag')
+        task.done = True
+        task2 = Task('Task2', 'tag1')
+        dashboard = Dashboard()
+        dashboard.task_list.extend([task, task2])
+        for task in dashboard.completed_task('tag'):
+            self.assertEqual(task, task)
+
 
 
 if __name__ == '__main__':
