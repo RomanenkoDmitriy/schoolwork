@@ -2,12 +2,6 @@
 
 
 # Додати поле tag (тег) для Task, значення за замовчанням - None
-# У Dashboard додати можливість сортування за Task title
-# У Dashboard додати можливість пошуку задачі за Task tag
-# У Dashboard додати можливість вивести список завершених задач (done == True) по заданому tag
-
-
-
 class Task:
 
     def __init__(self, title, tag=None):
@@ -31,8 +25,6 @@ class Task:
             return 'Value out of range'
 
 
-
-# У Dashboard додати можливість вивести список завершених задач (done == True) по заданому tag
 class Dashboard:
     def __init__(self):
         self.task_list = []
@@ -59,7 +51,8 @@ class Dashboard:
         return task_priority
 
     #У Dashboard додати можливість пошуку за Task title
-    def title_search(self, title):
+    def title_search(self):
+        title = input('Enter title:\t')
         title_list = []
         for task in self.task_list:
             if task.title == title:
@@ -67,7 +60,8 @@ class Dashboard:
         return title_list
 
     #У Dashboard додати можливість пошуку задачі за Task tag
-    def tag_search(self, tag):
+    def tag_search(self):
+        tag = input('Enter tag:\t')
         tag_list = []
         for task in self.task_list:
             if task.tag == tag:
@@ -75,8 +69,8 @@ class Dashboard:
         return tag_list
 
     #У Dashboard додати можливість вивести список завершених задач(done == True) по заданому tag
-    def completed_task(self, tag):
-        t_list = Dashboard.tag_search(self, tag)
+    def completed_task(self):
+        t_list = Dashboard.tag_search(self)
         completed_list = []
         for task in t_list:
             if task.done == True:
@@ -100,7 +94,7 @@ if __name__ == '__main__':
     task4 = Task('My test task4', '#task2')
     dashboard = Dashboard()
     dashboard.task_list.extend([task, task1, task2, task3, task4])
-    for task in dashboard.completed_task('#task1'):
+    for task in dashboard.completed_task():
         print(task)
 
     # dashboard.add_task()

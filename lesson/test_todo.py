@@ -47,8 +47,6 @@ class TestTask(unittest.TestCase):
         dashboard.add_task()
         self.assertEqual(str(dashboard.print_all_tasks()), 'My test task')
 
-
-
     def test_print_tasks_by_priority(self):
         dashboard = Dashboard()
         dashboard.add_task()
@@ -59,28 +57,30 @@ class TestTask(unittest.TestCase):
         task = Task('My test task')
         self.assertIsNone(task.tag, None)
 
-    def test_title_search(self):
+    @patch('builtins.input', return_value='Task1')
+    def test_title_search(self, mock_input):
         task = Task('Task1')
         task2 = Task('Task2')
         dashboard = Dashboard()
         dashboard.task_list.extend([task, task2])
-        self.assertNotEqual(len(dashboard.title_search('Task1')), 0)
+        self.assertNotEqual(len(dashboard.title_search()), 0)
 
-
-    def test_tag_search(self):
+    @patch('builtins.input', return_value='tag')
+    def test_tag_search(self, mock_input):
         task = Task('Task1', 'tag')
         task2 = Task('Task2', 'tag1')
         dashboard = Dashboard()
         dashboard.task_list.extend([task, task2])
-        self.assertNotEqual(len(dashboard.tag_search('tag')), 0)
+        self.assertNotEqual(len(dashboard.tag_search()), 0)
 
-    def test_completed_task(self):
+    @patch('builtins.input', return_value='tag')
+    def test_completed_task(self, mock_input):
         task = Task('Task1', 'tag')
         task.done = True
         task2 = Task('Task2', 'tag1')
         dashboard = Dashboard()
         dashboard.task_list.extend([task, task2])
-        for task in dashboard.completed_task('tag'):
+        for task in dashboard.completed_task():
             self.assertEqual(task, task)
 
 
