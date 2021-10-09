@@ -55,6 +55,24 @@ class TestTask(unittest.TestCase):
         task_priority = dashboard.print_tasks_by_priority()
         self.assertEqual(len(task_priority), 1)
 
+    def test_tag_object(self):
+        task = Task('My test task')
+        self.assertIsNone(task.tag, None)
+
+    def test_title_search(self):
+        task = Task('Task1')
+        task2 = Task('Task2')
+        dashboard = Dashboard()
+        dashboard.task_list.extend([task, task2])
+        self.assertNotEqual(len(dashboard.title_search('Task1')), 0)
+
+
+    def test_tag_search(self):
+
+
+    def test_completed_task(self):
+        pass
+
 
 if __name__ == '__main__':
     unittest.main()

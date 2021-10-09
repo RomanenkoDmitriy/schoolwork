@@ -76,9 +76,7 @@ class Dashboard:
 
     #У Dashboard додати можливість вивести список завершених задач(done == True) по заданому tag
     def completed_task(self, tag):
-
         t_list = Dashboard.tag_search(self, tag)
-
         completed_list = []
         for task in t_list:
             if task.done == True:
