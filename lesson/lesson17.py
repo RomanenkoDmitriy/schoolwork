@@ -77,6 +77,9 @@ class Dashboard:
                 completed_list.append(task)
         return completed_list
 
+    def sort_by_priority(self):
+        return sorted(self.task_list, key=lambda task: task.priority)
+
 
 
 
@@ -86,15 +89,25 @@ class Dashboard:
 if __name__ == '__main__':
     task = Task('My test task')
     task.done = True
+    task.priority = 4
+
     task1 = Task('My test task1', '#task1')
     task1.done = True
+
     task2 = Task('My test task2', '#task1')
+    task2.priority = 3
+
     task3 = Task('My test task3', '#task3')
     task3.done = True
+    task3.priority = 3
+
     task4 = Task('My test task4', '#task2')
+    task4.priority = 2
+
     dashboard = Dashboard()
     dashboard.task_list.extend([task, task1, task2, task3, task4])
-    for task in dashboard.completed_task():
+
+    for task in dashboard.sort_by_priority():
         print(task)
 
     # dashboard.add_task()

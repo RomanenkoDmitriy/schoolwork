@@ -83,6 +83,17 @@ class TestTask(unittest.TestCase):
         for task in dashboard.completed_task():
             self.assertEqual(task, task1)
 
+    def test_sprt_by_priority(self):
+        task = Task('My test task')
+        task.priority = 2
+        task1 = Task('My test task1')
+        task1.priority = 3
+        task2 = Task('My test task2')
+        task2.priority = 4
+        dashboard = Dashboard()
+        dashboard.task_list.extend([task1, task2, task])
+        self.assertEqual(dashboard.sort_by_priority(), [task, task1, task2])
+
 
 
 if __name__ == '__main__':
