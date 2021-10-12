@@ -1,5 +1,21 @@
+import csv
+import json
+import os
+from datetime import datetime
+import googlemaps
 
 
+class OpenFile:
+
+    def __init__(self, filename, mode):
+        self._file = open(filename, mode)
+
+    def __enter__(self):
+        return self._file
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self._file.close()
+        return True
 
 # Додати поле tag (тег) для Task, значення за замовчанням - None
 class Task:
@@ -24,8 +40,30 @@ class Task:
         else:
             return 'Value out of range'
 
+    def add_location(self):
+        place_lookup = input('Enter location name: \t')
+        gmaps = googlemaps.Client(
+            key='AIzaSyDZUTx1HWrOcNDng1V7-smaaHTBSobrw0I')
+        try:
+            place = gmaps.find_place(
+                place_lookup,
+                'textquery',
+                fields=['geometry/location', 'name', 'place_id']
+            )
+            if place['status'] == 'OK':
+                self.location = {
+                    'coordinates': place['candidates'][0]['geometry']['location'],
+                    'name': place['candidates'][0]['name'],
+                    'google_id': place['candidates'][0]['place_id']
+                }
+            else:
+                raise RuntimeError('Cannot set location')
+        except:
+            return
+
 
 class Dashboard:
+
     def __init__(self):
         self.task_list = []
 
@@ -80,6 +118,48 @@ class Dashboard:
     def sort_by_priority(self):
         return sorted(self.task_list, key=lambda task: task.priority)
 
+    def dump_to_json(self):
+        filename = f'tasks_{datetime.now().strftime("%Y%m%d%H%M%S")}.json'
+        filepath = os.path.join(os.getcwd(), 'data', filename)
+        task_list = [task.__dict__ for task in self.task_list]
+        with OpenFile(filepath, 'w') as file:
+            json.dump(task_list, file)
+
+    def dump_task_csv(self):
+        filename = f'tasks_{datetime.now().strftime("%Y%m%d%H%M%S")}.csv'
+        filepath = os.path.join(os.getcwd(), 'data', filename)
+        task_list = [task.__dict__ for task in self.task_list]
+        with OpenFile(filepath, 'w') as file:
+            writer = csv.DictWriter(file, [dict_task.keys() for  dict_task in task_list][0])
+            writer.writeheader()
+            for dict_task in task_list:
+                writer.writerow(dict_task)
+
+    def load_from_json(self):
+        dirpath = os.path.join(os.getcwd(), 'data')
+        files_data = os.listdir(dirpath)
+        filepath = os.path.join(os.getcwd(), 'data',
+                                [file for file in files_data if file.endswith('json')][-1])
+
+        task_list = []
+        with OpenFile(filepath, 'r') as file:
+            task_list.extend(json.load(file))
+
+        return task_list
+
+    def load_from_csv(self):
+        dirpath = os.path.join(os.getcwd(),'data')
+        files_data = os.listdir(dirpath)
+        filepath = os.path.join(os.getcwd(), 'data',
+                                [file for file in files_data if file.endswith('csv')][-1])
+
+        task_list = []
+        with OpenFile(filepath, 'r') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                task_list.append(row)
+
+        return task_list
 
 
 
@@ -107,8 +187,14 @@ if __name__ == '__main__':
     dashboard = Dashboard()
     dashboard.task_list.extend([task, task1, task2, task3, task4])
 
-    for task in dashboard.sort_by_priority():
-        print(task)
+    # dashboard.dump_to_json()
+    # dashboard.dump_task_csv()
+    # print(dashboard.load_from_json())
+    # print(dashboard.load_from_csv())
+    # print(dashboard.load_from_json())
+
+    # for task in dashboard.sort_by_priority():
+    #     print(task)
 
     # dashboard.add_task()
     # dashboard.task_list[-1].priority = 2
@@ -118,9 +204,9 @@ if __name__ == '__main__':
     # dashboard.add_task()
     # dashboard.task_list[-1].priority = 4
     # print(dashboard.print_tasks_by_priority())
-    #dashboard.print_all_tasks()
-    #task.priority = 11
-    #print(task._priority)
+    # dashboard.print_all_tasks()
+    # task.priority = 11
+    # print(task._priority)
     # out = str(task)
     # print(out)
 

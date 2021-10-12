@@ -1,4 +1,5 @@
 import unittest
+import io
 from unittest.mock import patch
 from lesson17 import Task, Dashboard
 
@@ -47,11 +48,15 @@ class TestTask(unittest.TestCase):
         dashboard.add_task()
         self.assertEqual(str(dashboard.print_all_tasks()), 'My test task')
 
-    def test_print_tasks_by_priority(self):
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_print_all_tasks(self, mock_stdout):
+        task1 = Task('My test task')
+        task2 = Task('My second task')
         dashboard = Dashboard()
-        dashboard.add_task()
-        task_priority = dashboard.print_tasks_by_priority()
-        self.assertEqual(len(task_priority), 1)
+        dashboard.task_list.extend([task1, task2])
+        dashboard.print_all_tasks()
+        self.assertEqual(mock_stdout.getvalue(),
+                         'My test task\nMy second task\n')
 
     def test_tag_object(self):
         task = Task('My test task')
@@ -83,16 +88,44 @@ class TestTask(unittest.TestCase):
         for task in dashboard.completed_task():
             self.assertEqual(task, task1)
 
-    def test_sprt_by_priority(self):
+    def test_sort_by_priority(self):
         task = Task('My test task')
         task.priority = 2
+
         task1 = Task('My test task1')
         task1.priority = 3
+
         task2 = Task('My test task2')
         task2.priority = 4
+
         dashboard = Dashboard()
         dashboard.task_list.extend([task1, task2, task])
+
         self.assertEqual(dashboard.sort_by_priority(), [task, task1, task2])
+
+    def test_dump_to_json(self):
+        task1 = Task('D task')
+        task2 = Task('A task')
+        dashboard = Dashboard()
+        dashboard.task_list.extend([task1, task2])
+        dashboard.dump_to_json()
+
+
+    def test_dump_task_csv(self):
+        task1 = Task('D task')
+        task2 = Task('A task')
+        dashboard = Dashboard()
+        dashboard.task_list.extend([task1, task2])
+        dashboard.dump_task_csv()
+
+    def test_load_from_json(self):
+        dashboard = Dashboard()
+        self.assertNotEqual(len(dashboard.load_from_json()), 0)
+
+    def test_load_from_csv(self):
+        dashboard = Dashboard()
+        self.assertNotEqual(len(dashboard.load_from_csv()), 0)
+
 
 
 
