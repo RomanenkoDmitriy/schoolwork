@@ -43,7 +43,7 @@ class Task:
     def add_location(self):
         place_lookup = input('Enter location name: \t')
         gmaps = googlemaps.Client(
-            key='AIzaSyDZUTx1HWrOcNDng1V7-smaaHTBSobrw0I')
+            key='AIzaSyCSa5JPQryMFDOWmT-_4ZeFZb-SEDxFyiA')
         try:
             place = gmaps.find_place(
                 place_lookup,
