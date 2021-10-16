@@ -17,6 +17,19 @@ class OpenFile:
         self._file.close()
         return True
 
+class Maps:
+
+    def __init__(self, key='AIzaSyCSa5JPQryMFDOWmT-_4ZeFZb-SEDxFyiA'):
+        self._key = key
+        self.gmaps = googlemaps.Client(self._key)
+
+    def __enter__(self):
+        return self.gmaps
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        del self.gmaps
+        return True
+
 # Додати поле tag (тег) для Task, значення за замовчанням - None
 class Task:
 
@@ -25,6 +38,7 @@ class Task:
         self.title = title
         self._priority = 1
         self.tag = tag
+        self.location = None
 
     def __str__(self):
         return f'{self.title.capitalize()}'
@@ -40,11 +54,30 @@ class Task:
         else:
             return 'Value out of range'
 
+    # def add_location(self):
+    #     place_lookup = input('Enter location name: \t')
+    #     gmaps = googlemaps.Client(
+    #         key='AIzaSyCSa5JPQryMFDOWmT-_4ZeFZb-SEDxFyiA')
+    #     try:
+    #         place = gmaps.find_place(
+    #             place_lookup,
+    #             'textquery',
+    #             fields=['geometry/location', 'name', 'place_id']
+    #         )
+    #         if place['status'] == 'OK':
+    #             self.location = {
+    #                 'coordinates': place['candidates'][0]['geometry']['location'],
+    #                 'name': place['candidates'][0]['name'],
+    #                 'google_id': place['candidates'][0]['place_id']
+    #             }
+    #         else:
+    #             raise RuntimeError('Cannot set location')
+    #     except:
+    #         return
+
     def add_location(self):
         place_lookup = input('Enter location name: \t')
-        gmaps = googlemaps.Client(
-            key='AIzaSyCSa5JPQryMFDOWmT-_4ZeFZb-SEDxFyiA')
-        try:
+        with Maps() as gmaps:
             place = gmaps.find_place(
                 place_lookup,
                 'textquery',
@@ -58,9 +91,6 @@ class Task:
                 }
             else:
                 raise RuntimeError('Cannot set location')
-        except:
-            return
-
 
 class Dashboard:
 

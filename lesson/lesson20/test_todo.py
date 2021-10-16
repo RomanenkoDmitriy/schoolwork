@@ -57,9 +57,11 @@ class TestTask(unittest.TestCase):
     def test_iter(self):
         matrix = Matrix(3)
         matrix_iter = iter(matrix)
-        self.assertEqual(next(matrix_iter), 1)
-        self.assertEqual(next(matrix_iter), -1)
-        self.assertEqual(next(matrix_iter), 4)
+        self.assertEqual(str(next(matrix_iter)), '1')
+        self.assertEqual(str(next(matrix_iter)), '-1')
+        self.assertEqual(str(next(matrix_iter)), '4')
+        with self.assertRaises(StopIteration):
+            next(matrix_iter)
 
 
 
