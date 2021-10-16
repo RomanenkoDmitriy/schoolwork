@@ -23,6 +23,12 @@ class TestTask(unittest.TestCase):
         with self.assertRaises(ValueError):
             signed_int = SignedInt('3', '=')
 
+    def test_str(self):
+        signed_int = SignedInt(3, '+')
+        signed_int1 = SignedInt(3, '-')
+        self.assertEqual(str(signed_int), '3')
+        self.assertEqual(str(signed_int1), '-3')
+
     def test_eg(self):
         signed_int = SignedInt(3, '+')
         signed_int1 = SignedInt(3, '+')
@@ -47,6 +53,14 @@ class TestTask(unittest.TestCase):
         signed_int = SignedInt(3, '+')
         signed_int1 = SignedInt(3, '+')
         self.assertTrue(signed_int >= signed_int1)
+
+    def test_iter(self):
+        matrix = Matrix(3)
+        matrix_iter = iter(matrix)
+        self.assertEqual(next(matrix_iter), 1)
+        self.assertEqual(next(matrix_iter), -1)
+        self.assertEqual(next(matrix_iter), 4)
+
 
 
 if __name__ == '__main__':

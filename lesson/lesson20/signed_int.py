@@ -127,7 +127,12 @@ if __name__ == '__main__':
     # print(signed_int1 >= signed_int2)
 
     matrix = Matrix(3)
+    a = iter(matrix)
+    print(next(a))
+    print(next(a))
+    print(next(a))
+    print(next(a))
 
-    for item in matrix:
-        print(item)
+    # for item in matrix:
+    #     print(item)
 
