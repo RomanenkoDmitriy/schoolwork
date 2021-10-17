@@ -19,7 +19,7 @@ class OpenFile:
 
 class Maps:
 
-    def __init__(self, key='AIzaSyCSa5JPQryMFDOWmT-_4ZeFZb-SEDxFyiA'):
+    def __init__(self, key=''):
         self._key = key
         self.gmaps = googlemaps.Client(self._key)
 
