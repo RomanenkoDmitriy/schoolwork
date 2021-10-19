@@ -54,6 +54,13 @@ class Task:
         else:
             return 'Value out of range'
 
+    @classmethod
+    def add_task_dict(cls, dict_task):
+        obj = cls(title='')
+        for key in dict_task:
+            setattr(obj, key, dict_task[key])
+        return obj
+
     # def add_location(self):
     #     place_lookup = input('Enter location name: \t')
     #     gmaps = googlemaps.Client(
@@ -111,12 +118,12 @@ class Dashboard:
         inp_priority = int(input('Enter priority:\t'))
 
         for task in self.task_list:
-            print(task)
-            print(task.priority)
+
             if task.priority == inp_priority:
                 task_priority.append(task)
 
         return task_priority
+
 
     #У Dashboard додати можливість пошуку за Task title
     def title_search(self):
@@ -165,6 +172,8 @@ class Dashboard:
             for dict_task in task_list:
                 writer.writerow(dict_task)
 
+
+
     def load_from_json(self):
         dirpath = os.path.join(os.getcwd(), 'data')
         files_data = os.listdir(dirpath)
@@ -173,8 +182,8 @@ class Dashboard:
 
         task_list = []
         with OpenFile(filepath, 'r') as file:
-            task_list.extend(json.load(file))
-
+            for task_dict in json.load(file):
+                task_list.append(Task.add_task_dict(task_dict))
         return task_list
 
     def load_from_csv(self):
@@ -187,7 +196,7 @@ class Dashboard:
         with OpenFile(filepath, 'r') as file:
             reader = csv.DictReader(file)
             for row in reader:
-                task_list.append(row)
+                task_list.append(Task.add_task_dict(row))
 
         return task_list
 
@@ -216,12 +225,13 @@ if __name__ == '__main__':
 
     dashboard = Dashboard()
     dashboard.task_list.extend([task, task1, task2, task3, task4])
-
     # dashboard.dump_to_json()
     # dashboard.dump_task_csv()
-    # print(dashboard.load_from_json())
-    # print(dashboard.load_from_csv())
-    # print(dashboard.load_from_json())
+
+    # for item in dashboard.load_from_json():
+    #     print(item)
+    # for item in dashboard.load_from_csv():
+    #     print(item)
 
     # for task in dashboard.sort_by_priority():
     #     print(task)

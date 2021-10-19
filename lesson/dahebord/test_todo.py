@@ -126,6 +126,20 @@ class TestTask(unittest.TestCase):
         dashboard = Dashboard()
         self.assertNotEqual(len(dashboard.load_from_csv()), 0)
 
+    # @patch('builtins.input', return_value=3)
+    # def test_print_priority(self, mock_input):
+    #     task = Task('My test task')
+    #     task.priority = 2
+    #
+    #     task1 = Task('My test task1')
+    #     task1.priority = 3
+    #
+    #     task2 = Task('My test task2')
+    #     task2.priority = 3
+    #
+    #     dashboard = Dashboard()
+    #     dashboard.task_list.extend([task1, task2, task])
+    #     self.assertEqual(len(dashboard.print_tasks_by_priority()), 2)
 
 
 
