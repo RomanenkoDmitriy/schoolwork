@@ -4,8 +4,8 @@ def linear_shift(array: list, shift: int) -> list:
     array = [1, 2, 3, 4] shift = 2 => [0, 0, 1, 2]
     array = [1, 2, 3, 4] shift = 3 => [0, 0, 0, 1]
     '''
+
     num_list = []
-    #for item in range(shift - 1):
     for num in array:
         numbers = num - shift
         if numbers <= 0:
@@ -15,20 +15,16 @@ def linear_shift(array: list, shift: int) -> list:
     return num_list
 
 
-#print(linear_shift([1, 2, 3, 4], 3))
-
-
-
 def circular_shift(array: list, shift: int) -> list:
     '''
     array = [1, 2, 3, 4] shift = 1 => [4, 1, 2, 3]
     array = [1, 2, 3, 4] shift = 2 => [3, 4, 1, 2]
     array = [1, 2, 3, 4] shift = 3 => [2, 3, 4, 1]
     '''
+
     for item in range(shift):
-            array.insert(0, (array.pop(-1)))
+        array.insert(0, (array.pop(-1)))
     return array
-print(circular_shift([1, 2, 3, 4], 1))
 
 
 def nested_parentheses(incoming: str) -> bool:
@@ -45,27 +41,18 @@ def nested_parentheses(incoming: str) -> bool:
     incoming = "(()()(())" => False
     '''
 
+    #print(f'(  : {incoming.count("(")}       )     : {incoming.count(")")}')
 
-    s = []
-    balanced = True
-    index = 0
-    while index < len(incoming) and balanced:
-        token = incoming[index]
-        if token == "(":
-            s.append(token)
-        elif token == ")":
-            if len(s) == 0:
-                balanced = False
-            else:
-                s.pop()
-
-        index += 1
-
-    return balanced and len(s) == 0
+    str_list = []
+    for item in incoming:
+        if item == '(':
+            str_list.append(item)
+        elif item == ')' and len(str_list) > 0:
+            str_list.pop()
+    return len(str_list) == 0
 
 
-print(nested_parentheses('((())(())())'))
-print(nested_parentheses(''))
-print(nested_parentheses('(((())))'))
-print(nested_parentheses('())'))
-print(nested_parentheses('(()()(())'))
+if __name__ == '__main__':
+    print(linear_shift([1, 2, 3, 4], 3))
+    print(circular_shift([1, 2, 3, 4], 1))
+    print(nested_parentheses('())((())'))
