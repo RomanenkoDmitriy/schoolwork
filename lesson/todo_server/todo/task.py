@@ -20,6 +20,8 @@ def task_detail(task_id):
         return Task.objects[(binary_search(array, task_id) - 1)].to_json()
     else:
         abort(404)
+
+
     # array = Task.objects
     # if low is None and high is None:
     #     low = 0
