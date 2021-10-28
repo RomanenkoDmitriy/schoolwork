@@ -53,7 +53,7 @@ class SignedInt:
 
     @modulus.setter
     def modulus(self, modulus):
-        if type(modulus) == int:
+        if type(modulus) is int:
             self._modulus = modulus
         else:
             raise ValueError
@@ -90,7 +90,7 @@ class Matrix:
     def __init__(self, size):
         for index in range(size):
             modulus = pow(index, index)
-            if index%2:
+            if index % 2:
                 sign = '-'
             else:
                 sign = '+'

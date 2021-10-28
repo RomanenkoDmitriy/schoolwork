@@ -2,6 +2,7 @@ import csv
 import json
 import os
 from datetime import datetime
+from dataclasses import dataclass
 import googlemaps
 
 
@@ -30,14 +31,19 @@ class Maps:
         del self.gmaps
         return True
 
+@dataclass
+class Tag:
+    name: str
+    color: str = 'Yellow'
+
 # Додати поле tag (тег) для Task, значення за замовчанням - None
 class Task:
 
-    def __init__(self, title, tag=None):
+    def __init__(self, title):
         self.done = False
         self.title = title
         self._priority = 1
-        self.tag = tag
+        self.tag = str(Tag('tag'))
         self.location = None
 
     def __str__(self):
@@ -167,12 +173,10 @@ class Dashboard:
         filepath = os.path.join(os.getcwd(), 'data', filename)
         task_list = [task.__dict__ for task in self.task_list]
         with OpenFile(filepath, 'w') as file:
-            writer = csv.DictWriter(file, [dict_task.keys() for  dict_task in task_list][0])
+            writer = csv.DictWriter(file, [dict_task.keys() for dict_task in task_list][0])
             writer.writeheader()
             for dict_task in task_list:
                 writer.writerow(dict_task)
-
-
 
     def load_from_json(self):
         dirpath = os.path.join(os.getcwd(), 'data')
@@ -210,26 +214,30 @@ if __name__ == '__main__':
     task.done = True
     task.priority = 4
 
-    task1 = Task('My test task1', '#task1')
+    task1 = Task('My test task1',)
     task1.done = True
 
-    task2 = Task('My test task2', '#task1')
+    task2 = Task('My test task2')
     task2.priority = 3
 
-    task3 = Task('My test task3', '#task3')
+    task3 = Task('My test task3')
     task3.done = True
     task3.priority = 3
 
-    task4 = Task('My test task4', '#task2')
+    task4 = Task('My test task4')
     task4.priority = 2
 
     dashboard = Dashboard()
     dashboard.task_list.extend([task, task1, task2, task3, task4])
+
+
+    # print(task.tag)
     # dashboard.dump_to_json()
     # dashboard.dump_task_csv()
 
     # for item in dashboard.load_from_json():
     #     print(item)
+    print(dashboard.load_from_csv())
     # for item in dashboard.load_from_csv():
     #     print(item)
 

@@ -1,10 +1,10 @@
 import json
-
+from copy import copy
 class Task:
 
     objects = []
 
-    def __init__(self, title):
+    def __init__(self, title, priority=1):
         self.id = len(Task.objects) + 1
         self.done = False
         self.title = title
@@ -13,11 +13,16 @@ class Task:
         self.tag = None
         Task.objects.append(self)
 
-    # def __str__(self):
-    #     return self.title
+    def __str__(self):
+        return self.title
 
     def __repr__(self):
         return 'Task(title=\'{}\')'.format(self.title)
+
+    # def __copy__(self):
+    #     task_copy = type(self)(self.title)
+    #     task_copy.__dict__.update(self.__dict__)
+    #     return task_copy
 
     @property
     def priority(self):
@@ -43,8 +48,16 @@ class Task:
         return json.dumps(task_list)
 
 
-task1 = Task('test1')
-task2 = Task('test2')
-task3 = Task('test3')
-task4 = Task('test4')
-task5 = Task('test5')
+# task1 = Task('test1')
+# task2 = Task('test2')
+# task3 = Task('test3')
+# task4 = Task('test4')
+# task5 = Task('test5')
+# task1.title = 'new test'
+# arr = copy(Task.objects)
+# task2.title = 'sdfghjkljhfgds'
+# for t in Task.objects:
+#     print(t)
+# print('-------------------------------------------------------------')
+# for f in arr:
+#     print(f)
