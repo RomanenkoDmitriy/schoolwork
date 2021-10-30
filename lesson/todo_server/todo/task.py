@@ -1,3 +1,5 @@
+from copy import copy, deepcopy
+
 from flask import Blueprint, request, abort, render_template
 
 from .models import Task
@@ -17,7 +19,7 @@ def task_list():
     else:
         order = request.args.get(
             'order', default='', type=str)
-        tasks = [task for task in Task.objects]
+        tasks = deepcopy(Task.objects)
         if order:
             bubble_sort(tasks, order)
         else:
