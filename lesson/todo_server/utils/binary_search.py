@@ -27,8 +27,8 @@ def binary_search_id(array, element, low=None, high=None):
         if array[mid].id == element:
             return array[mid]
         elif array[mid].id > element:
-            return binary_search(array, element, low, mid - 1, )
+            return binary_search_id(array, element, low, mid - 1, )
         else:
-            return binary_search(array, element, mid + 1, high)
+            return binary_search_id(array, element, mid + 1, high)
     else:
         return None
