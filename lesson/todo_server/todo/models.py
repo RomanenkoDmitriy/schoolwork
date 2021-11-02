@@ -3,34 +3,15 @@ import json
 from ..utils.binary_search import binary_search_id
 
 
-
-# def binary_search_id(array, element, low=None, high=None):
-#     if low is None and high is None:
-#         low = 0
-#         high = len(array) - 1
-#
-#     if high >= low:
-#         mid = (high + low) // 2
-#
-#         if array[mid].id == element:
-#             return array[mid]
-#         elif array[mid].id > element:
-#             return binary_search_id(array, element, low, mid - 1, )
-#         else:
-#             return binary_search_id(array, element, mid + 1, high)
-#     else:
-#         return None
-
-
 class Task:
 
     objects = []
 
-    def __init__(self, title, priority=1):
+    def __init__(self, title, _priority=1):
         self.id = len(Task.objects) + 1
         self.done = False
         self.title = title
-        self._priority = 1
+        self._priority = _priority
         self.location = None
         self.tag = None
         self.cildren = []
@@ -42,16 +23,17 @@ class Task:
     def __repr__(self):
         return 'Task(title=\'{}\')'.format(self.title)
 
-    # def __copy__(self):
-    #     task_copy = type(self)(self.title)
-    #     task_copy.__dict__.update(self.__dict__)
-    #     return task_copy
+    def __eq__(self, other):
+        return self.title == other.title and self.priority == other.priority
+
+    def __hash__(self):
+        return hash((self.title, self.priority))
 
     @property
     def priority(self):
         return self._priority
 
-    @priority.setter    
+    @priority.setter
     def priority(self, value):
         if value in range(1, 11):
             self._priority = value
@@ -85,16 +67,16 @@ class Task:
                 children.extend(child_task.get_subtasks())
 
 
-
 if __name__ == '__main__':
-
     task1 = Task('test1')
     task2 = Task('test2')
     task3 = Task('test3')
     task4 = Task('test4')
     task5 = Task('test5')
     Task.objects.extend([task5, task3, task4, task2, task1])
-    print(binary_search_id(Task.objects, 3))
+    print(hash(task1))
+
+    # print(binary_search_id(Task.objects, 3))
     # # task1.title = 'new test'
     # arr = copy(Task.objects)
     # task2.title = 'sdfghjkljhfgds'
