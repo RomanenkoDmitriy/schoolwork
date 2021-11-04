@@ -1,7 +1,6 @@
 import json
 
-from ..utils.binary_search import binary_search_id
-
+from lesson.todo_server.utils.binary_search import binary_search_id
 
 class Task:
 
@@ -74,7 +73,7 @@ if __name__ == '__main__':
     task4 = Task('test4')
     task5 = Task('test5')
     Task.objects.extend([task5, task3, task4, task2, task1])
-    print(hash(task1))
+    # print(hash(task1))
 
     # print(binary_search_id(Task.objects, 3))
     # # task1.title = 'new test'

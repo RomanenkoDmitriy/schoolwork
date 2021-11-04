@@ -1,4 +1,5 @@
 import os
+
 from flask import Flask
 
 
@@ -10,3 +11,4 @@ def create_app():
     app.register_blueprint(task.bp)
 
     return app
+
