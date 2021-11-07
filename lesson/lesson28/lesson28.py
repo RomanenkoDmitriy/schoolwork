@@ -55,6 +55,13 @@ class Skill:
         Skill.list_skill.append(self)
         self.id = len(Skill.list_skill)
 
+    @classmethod
+    def add_skills_obj(cls, dict_skills):
+        obj = cls(category=None, name=None, experience=None, level=None)
+        for skill in dict_skills:
+            setattr(obj, skill, dict_skills[skill])
+        return obj
+
 
     @property
     def category(self):
@@ -80,8 +87,6 @@ class Skill:
             self._level = None
 
 
-
-
 class Contact:
     contacts = []
 
@@ -104,6 +109,13 @@ class Contact:
         else:
             self._contact_type = None
 
+    @classmethod
+    def add_contacts_obj(cls, dict_contacts):
+        obj = cls(contact_type=None, value=None)
+        for contact in dict_contacts:
+            setattr(obj, contact, dict_contacts[contact])
+        return obj
+
 class JobExperience:
 
     def __init__(self, start_date, end_date, company, position):
@@ -111,6 +123,13 @@ class JobExperience:
         self.end_data = end_date
         self.company = company
         self.position = position
+
+    @classmethod
+    def add_experience_obj(cls, dict_experience):
+        obj = cls(start_date=None, end_date=None, company=None, position=None)
+        for experience in dict_experience:
+            setattr(obj, experience, dict_experience[experience])
+        return obj
 
 class Person:
     list_per = []
@@ -123,6 +142,24 @@ class Person:
         self.experience = []
         Person.list_per.append(self)
         self.id = len(Person.list_per)
+
+
+    @classmethod
+    def add_person_obj(cls, dict_person):
+
+        method_dict = {
+            'contact': Contact.add_contacts_obj,
+            'skills': Skill.add_skills_obj,
+            'experience': JobExperience.add_experience_obj
+        }
+
+        obj = cls(last_name=None, first_name=None, birth_date=None)
+        for person in dict_person:
+            setattr(obj, person, dict_person[person])
+            if person in ['contact', 'skills', 'experience']:
+                setattr(obj, person, [method_dict[person](i) for i in dict_person[person]])
+        return obj
+
 
     def add_contact(self, contact_type, value):
         self.contact.append(Contact(contact_type, value))
@@ -173,11 +210,33 @@ class Person:
     def dump_json(self):
         file_name = 'person.json'
         path_json = os.path.join(os.getcwd(), 'data', file_name)
-        item = []
-        for key in Person.__dict__:
+        item = {}
+        for key, val in self.__dict__.items():
+            item[key] = val
             if key in ['contact', 'skills', 'experience']:
+                item[key] = [i.__dict__ for i in val]
         with open(path_json, 'w') as file:
-            json.dump(self.__dict__, file, sort_keys=True)
+            json.dump(item, file)
+
+    @classmethod
+    def load_json(cls):
+        file_name = 'person.json'
+        path_json = os.path.join(os.getcwd(), 'data', file_name)
+        with open(path_json, 'r') as file:
+            dict_person = json.load(file)
+
+        obj_person = Person.add_person_obj(dict_person)
+        return obj_person
+
+    def skills_category(self):
+        list_skills = []
+        for skill in self.skills:
+            list_skills.append({skill.category: [skill for item in skill.__dict__ if skill.category == item]})
+
+
+        return list_skills
+
+
 
 if __name__ == '__main__':
 
@@ -187,18 +246,24 @@ if __name__ == '__main__':
 
     per.add_contact('phone', 4567)
     per.add_contact('phone', 78900987)
+
     per.add_skills('technologies', 'asdfg', 1, 'junior')
-    # print(per.id)
     per.add_skills('technologies', 'vbnm', 2, 'junior')
-    # print(per.id)
+    per.add_skills('methodologies', 'fd', 2, 'junior')
+    per.add_skills('languages', 'vb', 2, 'junior')
 
     per.add_experience(23, 34, 'asd', 'jun')
     per.add_experience(23, 34, 'fgh', 'jun')
     per.add_experience(23, 34, 'jhk', 'jun')
     per.add_experience(23, 34, 'cvb', 'jun')
 
+    print(per.skills_category())
+
     # per.dump_json()
-    print(per.__dict__)
+    # print(per.load_json())
+    # per4 = Person.load_json()
+    # print(per4.skills[0].name)
+    # print(per.__dict__)
 
     # for i in per.contact:
     #     print(i)
