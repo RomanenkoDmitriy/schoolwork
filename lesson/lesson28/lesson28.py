@@ -30,9 +30,7 @@
 #     що належать до цієї категорії, відсортовані за зменшенням досвіду (навичка з найбільшим значенням досвіду у цій категорії йде перша).
 #     - Реалізувати метод, який сортує досвід роботи персони від найбільш актуального до найбільш давнього
 #     (останній досвід роботи йде першим у відсортованому списку, найбільш давній - останнім)
-# 3. За допомогою фреймворку Flask реалізувати простий сервер, який буде мати два url:
-#     - "/" - повертає список повних імен всіх персон (first_name + last_name), у текстовому представленні.
-#     - "/person/<int:person_id>" - повертає тектове представлення інформації про одного користувача.
+
 #
 # За необхідності можна додавати будь-які службові атрибути та методи для будь-яких класів. Усе рішення має міститися в окремій папці з назвою cv_builder.
 # © 2021 GitHub, Inc.
@@ -44,6 +42,7 @@
 # Contact GitHub
 import os
 import json
+import operator
 
 class Skill:
     list_skill = []
@@ -143,6 +142,12 @@ class Person:
         Person.list_per.append(self)
         self.id = len(Person.list_per)
 
+    def __str__(self):
+        return f'{self.first_name} {self.last_name}'
+
+    def __repr__(self):
+        return f'{self.first_name} {self.last_name}'
+
 
     @classmethod
     def add_person_obj(cls, dict_person):
@@ -230,14 +235,29 @@ class Person:
 
     def skills_category(self):
         list_skills = []
+        list_key = []
         for skill in self.skills:
-            list_skills.append({skill.category: [skill for item in skill.__dict__ if skill.category == item]})
-
-
+            if skill.category in list_key:
+                continue
+            list_key.append(skill.category)
+            skill_category = []
+            for item in self.skills:
+                if skill.category == item.category:
+                    skill_category.append(item)
+                    skill_category.sort(key=lambda k: skill.experience)
+            list_skills.append({skill.category: skill_category})
         return list_skills
 
+#     - Реалізувати метод, який сортує досвід роботи персони від найбільш актуального до найбільш давнього
+#     (останній досвід роботи йде першим у відсортованому списку, найбільш давній - останнім)
+
+    def sort_experience(self):
+        return sorted(self.experience, key=operator.attrgetter('end_data'), reverse=True)
 
 
+per = Person('Petrov', 'Petr', 23)
+per1 = Person('as', 'as', 23)
+per2 = Person('asdf', 'asdf', 23)
 if __name__ == '__main__':
 
     per = Person('asdf', 'asdf', 23)
@@ -249,15 +269,22 @@ if __name__ == '__main__':
 
     per.add_skills('technologies', 'asdfg', 1, 'junior')
     per.add_skills('technologies', 'vbnm', 2, 'junior')
-    per.add_skills('methodologies', 'fd', 2, 'junior')
-    per.add_skills('languages', 'vb', 2, 'junior')
+    per.add_skills('methodologies', 'fd', 3, 'junior')
+    per.add_skills('languages', 'vb', 4, 'junior')
 
     per.add_experience(23, 34, 'asd', 'jun')
-    per.add_experience(23, 34, 'fgh', 'jun')
-    per.add_experience(23, 34, 'jhk', 'jun')
-    per.add_experience(23, 34, 'cvb', 'jun')
+    per.add_experience(24, 39, 'fgh', 'jun')
+    per.add_experience(25, 37, 'jhk', 'jun')
+    per.add_experience(26, 38, 'cvb', 'jun')
 
-    print(per.skills_category())
+    # print(per.sort_experience())
+    # exp = per.sort_experience()
+    # for e in exp:
+    #     print(e.end_data)
+
+    # print(per.skills_category())
+    # print(per.skills_category()[0]['technologies'][0].experience)
+    # print(per.skills_category()[0]['technologies'][1].experience)
 
     # per.dump_json()
     # print(per.load_json())
