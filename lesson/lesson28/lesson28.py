@@ -42,6 +42,8 @@
 # Status
 # Docs
 # Contact GitHub
+import os
+import json
 
 class Skill:
     list_skill = []
@@ -146,53 +148,69 @@ class Person:
             if company == exp.company:
                 del self.experience[self.experience.index(exp)]
 
-    def update_contact(self, contact_type, value):
+    def update_contact(self, contact_type, value, val):
         for cont in self.contact:
-            if cont.value == value:
+            if cont.value == val:
                 cont.contact_type = contact_type
                 cont.value = value
 
+    def update_skills(self, category, name, experience, level, id):
+        for skill in self.skills:
+            if skill.id == id:
+                skill.category = category
+                skill.name = name
+                skill.experience = experience
+                skill.level = level
 
-    def update_contact(self, contact_type, value):
-        pass
+    def update_experience(self, start_date, end_date, company, position, val):
+        for item in self.experience:
+            if item.company == val:
+                item.start_date = start_date
+                item.end_date = end_date
+                item.company = company
+                item.position = position
 
-    def update_contact(self, contact_type, value):
-        pass
+    def dump_json(self):
+        file_name = 'person.json'
+        path_json = os.path.join(os.getcwd(), 'data', file_name)
+        item = []
+        for key in Person.__dict__:
+            if key in ['contact', 'skills', 'experience']:
+        with open(path_json, 'w') as file:
+            json.dump(self.__dict__, file, sort_keys=True)
 
+if __name__ == '__main__':
 
+    per = Person('asdf', 'asdf', 23)
+    per1 = Person('asdf', 'asdf', 23)
+    per2 = Person('asdf', 'asdf', 23)
 
+    per.add_contact('phone', 4567)
+    per.add_contact('phone', 78900987)
+    per.add_skills('technologies', 'asdfg', 1, 'junior')
+    # print(per.id)
+    per.add_skills('technologies', 'vbnm', 2, 'junior')
+    # print(per.id)
 
+    per.add_experience(23, 34, 'asd', 'jun')
+    per.add_experience(23, 34, 'fgh', 'jun')
+    per.add_experience(23, 34, 'jhk', 'jun')
+    per.add_experience(23, 34, 'cvb', 'jun')
 
+    # per.dump_json()
+    print(per.__dict__)
 
-
-per = Person('asdf', 'asdf', 23)
-per1 = Person('asdf', 'asdf', 23)
-per2 = Person('asdf', 'asdf', 23)
-
-per.add_contact('phone', 4567)
-per.add_contact('phone', 78900987)
-per.add_skills('technologies', 'asdfg', 1, 'junior')
-# print(per.id)
-per.add_skills('technologies', 'vbnm', 2, 'junior')
-# print(per.id)
-
-per.add_experience(23, 34, 'asd', 'jun')
-per.add_experience(23, 34, 'fgh', 'jun')
-per.add_experience(23, 34, 'jhk', 'jun')
-per.add_experience(23, 34, 'cvb', 'jun')
-
-for i in per.experience:
-    print(i.company)
-# per.del_contact(4567)
-print('----------------------------------------------------------------')
-# per.del_skills(2)
-per.del_experience('fgh')
-for m in per.experience:
-    print(m.company)
-
-
-# for item in per.contact:
-#     print(item)
+    # for i in per.contact:
+    #     print(i)
+    # # per.del_contact(4567)
+    # print('----------------------------------------------------------------')
+    # # per.del_skills(2)
+    # per.update_contact('email', 444444444444444, 4567)
+    # per.del_experience('fgh')
+    # for m in per.contact:
+    #     print(m)
+    # for item in per.contact:
+    #     print(item)
 
 
 
