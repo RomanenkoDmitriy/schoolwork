@@ -3,17 +3,21 @@
 #     - "/person/<int:person_id>" - повертає тектове представлення інформації про одного користувача.
 import json
 
-from flask import Flask
+from flask import Flask, render_template
 
 from lesson28 import Person
 
 app = Flask(__name__)
 
+
 @app.route('/')
 def index():
-    return str(Person.list_per)
+    # persons_list = 4
+    return render_template('base.html', persons=Person.list_per, name='List Person')
+
+
 @app.route('/person/<int:person_id>')
-def person(person_id):
+def person_detail(person_id):
     for person in Person.list_per:
         if person.id == person_id:
-            return str(person)
+            return render_template('person.html', person=person, name='Person')

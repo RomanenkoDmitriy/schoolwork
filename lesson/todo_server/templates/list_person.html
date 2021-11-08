@@ -1,0 +1,12 @@
+
+{% extends 'base.html' %}
+
+{% block header %}
+  <h2>List persons</h2>
+{% endblock %}
+
+{% block content %}
+    {% for person in persons %}
+        <li> {{person}}</li><br>
+    {% endfor %}
+{% endblock %}

@@ -131,7 +131,9 @@ class JobExperience:
         return obj
 
 class Person:
+
     list_per = []
+
     def __init__(self, last_name, first_name, birth_date):
         self.last_name = last_name
         self.first_name = first_name
@@ -254,10 +256,19 @@ class Person:
     def sort_experience(self):
         return sorted(self.experience, key=operator.attrgetter('end_data'), reverse=True)
 
+    @classmethod
+    def get_list_per(cls):
+        return cls.list_per
+
+    @classmethod
+    def list_to_json(cls):
+        person_list = [t.__dict__ for t in cls.list_per]
+        return json.dumps(person_list)
+
 
 per = Person('Petrov', 'Petr', 23)
-per1 = Person('as', 'as', 23)
-per2 = Person('asdf', 'asdf', 23)
+per1 = Person('Vasilev', 'Vasilii', 23)
+per2 = Person('Hokin', 'Bob', 23)
 if __name__ == '__main__':
 
     per = Person('asdf', 'asdf', 23)

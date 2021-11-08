@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h2>{{name}}</h2>
+    {% block content %}
+        <ul>
+            {% for per in persons %}
+            <li><a href="{{ url_for('person_detail', person_id=per.id) }}"> {{per}} </a> </li><br>
+            {% endfor %}
+        </ul>
+    {% endblock %}
+</body>
+</html>
