@@ -288,6 +288,19 @@ if __name__ == '__main__':
     per.add_experience(25, 37, 'jhk', 'jun')
     per.add_experience(26, 38, 'cvb', 'jun')
 
+    val = {"last_name": "asdf", "first_name": "asdf", "birth_date": 23,
+          "contact": [{"_contact_type": "phone", "value": 4567},
+                      {"_contact_type": "phone", "value": 78900987}],
+          "skills": [{"_category": "technologies", "name": "asdfg", "experience": 1, "_level": "junior", "id": 1},
+                     {"_category": "technologies", "name": "vbnm", "experience": 2, "_level": "junior", "id": 2}],
+          "experience": [{"start_data": 23, "end_data": 34, "company": "asd", "position": "jun"},
+                         {"start_data": 23, "end_data": 34, "company": "fgh", "position": "jun"},
+                         {"start_data": 23, "end_data": 34, "company": "jhk", "position": "jun"},
+                         {"start_data": 23, "end_data": 34, "company": "cvb", "position": "jun"}],
+          "id": 1}
+    person9 = Person.add_person_obj(val)
+    print(person9.skills[0].name)
+
     # print(per.sort_experience())
     # exp = per.sort_experience()
     # for e in exp:
