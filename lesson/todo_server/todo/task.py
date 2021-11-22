@@ -3,10 +3,10 @@ from copy import deepcopy
 
 from flask import Blueprint, request, abort, render_template
 
-from models import Task
-from lesson.todo_server.utils.binary_search import binary_search
-from lesson.todo_server.utils.bubble_sort import bubble_sort
-from lesson.todo_server.utils.insertion_sort import *
+from .models import Task
+from ..utils.binary_search import binary_search
+from ..utils.bubble_sort import bubble_sort
+from ..utils.insertion_sort import *
 
 bp = Blueprint('task', __name__)
 
@@ -29,8 +29,10 @@ def task_list():
 @bp.route('/<int:task_id>')
 def task_detail(task_id):
     array = [task_id.id for task_id in Task.objects]
-    if task_id <= array[-1]:
-        return Task.objects[(binary_search(array, task_id) - 1)].to_json()
+    task = binary_search(array, task_id)
+
+    if task:
+        return Task.objects[(task - 1)].to_json()
     else:
         abort(404)
 

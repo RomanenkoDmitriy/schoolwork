@@ -1,6 +1,6 @@
 import json
 
-from lesson.todo_server.utils.binary_search import binary_search_id
+from ..utils.binary_search import binary_search_id
 
 class Task:
 
@@ -65,6 +65,12 @@ class Task:
                 children.append(child_task)
                 children.extend(child_task.get_subtasks())
 
+
+task1 = Task('test1')
+task2 = Task('test2')
+task3 = Task('test3')
+task4 = Task('test4')
+task5 = Task('test5')
 
 if __name__ == '__main__':
     task1 = Task('test1')
