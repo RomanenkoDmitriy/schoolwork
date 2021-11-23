@@ -150,11 +150,11 @@ slice_str = some_str[:4]
 
 
 # 8. Наведіть два приклади варіантів коректної роботи з файлом, коли закриття файлу після читання буде гарантоване
-path = '#'
-file = open(path, 'r')
-file.close()
-with open(path, 'r') as file:
-    pass
+# path = '#'
+# file = open(path, 'r')
+# file.close()
+# with open(path, 'r') as file:
+#     pass
 
 
 # 9. Наведіть приклади двух функцій пошуку елементу у списку. Яку складність має кожен з них? Які обмеження у кожного з них?
@@ -208,7 +208,7 @@ class MyClass:
 # {1000: 1, 500:1, 200: 1, 50:1, 10: 3, 5: 1, 2: 1}, {50:1, 10:3}
 
 def my_cashbox(cash):
-    cash_list = [1000, 500, 200, 50, 10, 5, 2, 1, 0.5, 0.1]
+    cash_list = [1000, 500, 200, 100, 50, 10, 5, 2, 1, 0.5, 0.1]
     some_dict = {}
     item = 1
     count = 0
@@ -241,5 +241,5 @@ if __name__ == '__main__':
     # some_class = MyClass(1)
     # some_class.add_atr('val2', 2)
     # print(some_class.val2)
-    item = my_cashbox(1787.80)
+    item = my_cashbox(1887.80)
     print(item)
