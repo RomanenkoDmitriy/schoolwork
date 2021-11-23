@@ -150,11 +150,11 @@ slice_str = some_str[:4]
 
 
 # 8. Наведіть два приклади варіантів коректної роботи з файлом, коли закриття файлу після читання буде гарантоване
-path = '#'
-file = open(path, 'r')
-file.close()
-with open(path, 'r') as file:
-    pass
+# path = '#'
+# file = open(path, 'r')
+# file.close()
+# with open(path, 'r') as file:
+#     pass
 
 
 # 9. Наведіть приклади двух функцій пошуку елементу у списку. Яку складність має кожен з них? Які обмеження у кожного з них?
@@ -205,7 +205,6 @@ class MyClass:
 
 # Розробити програму, яка на вхід отримуватиме суму як число з плаваючою точкою (наприклад, 1787.80) і повертариме словники,
 # який репрезентує найменшу кількість купюр і монет, що ходять в Україні, які потрібні для того, щоб набрати таку суму
-
 # {1000: 1, 500:1, 200: 1, 50:1, 10: 3, 5: 1, 2: 1}, {50:1, 10:3}
 
 def my_cashbox(cash):
@@ -213,11 +212,10 @@ def my_cashbox(cash):
     some_dict = {}
     item = 1
     count = 0
-    val = cash
-    while count < len(cash_list):
-        if cash_list[count] <= val:
+    while cash:
+        if cash_list[count] <= cash:
             some_dict[str(cash_list[count])] = item
-            val = round(val - cash_list[count], 1)
+            cash = round(cash - cash_list[count], 1)
             item += 1
         else:
             count += 1
