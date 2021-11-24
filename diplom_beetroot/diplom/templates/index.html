@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>Hello</h1>
+{% endblock %}
+
+{% block form %}
+    {% for user in users %}
+        <ul>
+            <li>{{user.login}}</li>
+        </ul>
+    {% endfor %}}
+{% endblock %}
+
+{% block test %}
+    <h3>{{title}}</h3>
+    <p>
+        {{text}}
+    </p>
+{% endblock %}

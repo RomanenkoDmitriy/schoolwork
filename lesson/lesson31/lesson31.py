@@ -215,6 +215,7 @@ def my_cashbox(cash):
     while cash:
         if cash_list[count] <= cash:
             some_dict[str(cash_list[count])] = item
+            # print(f'{cash_list[count]} - {item}')
             cash = round(cash - cash_list[count], 1)
             item += 1
         else:
@@ -241,5 +242,5 @@ if __name__ == '__main__':
     # some_class = MyClass(1)
     # some_class.add_atr('val2', 2)
     # print(some_class.val2)
-    item = my_cashbox(1887.80)
+    item = my_cashbox(1787.80)
     print(item)
