@@ -1,5 +1,6 @@
 import json
 import os
+import sqlite3
 
 class User:
     list_users = []
@@ -10,6 +11,7 @@ class User:
         User.list_users.append(self)
         self.id = len(User.list_users)
         self.user_authorization = False
+        self.token = None
 
     def __hash__(self):
         return hash((self.login, self._password))
@@ -31,6 +33,17 @@ class User:
     def change_password(self, password):
         self._password = password
         self.user_hash = hash(self)
+
+    def add_token(self):
+        self.token = True
+
+    def add_base(self):
+        path = os.path.join(os.getcwd(), 'data_base')
+        con = sqlite3.connect(f'{path}users.db')
+        con.execute("""CREATE TABLE IF NOT EXISTS users(
+            userid 
+        """)
+
 
 
 class Announcement:

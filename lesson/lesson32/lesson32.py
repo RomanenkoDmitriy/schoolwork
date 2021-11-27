@@ -12,6 +12,7 @@ class Vertex:
     def __init__(self, name):
         self.name = name
         self.neighbors = []
+        self.weight_neighbors = {}
 
     def __str__(self):
         return f'{self.name}'
@@ -36,26 +37,38 @@ class Vertex:
                 self.neighbors.remove(val)
         return self.neighbors
 
+    def add_weight(self, neighbor, weight):
+        for nei in self.neighbors:
+            if nei.name == neighbor:
+                self.weight_neighbors[nei] = weight
+
 
 class Graph:
 
     def __init__(self):
         self.vertices = {}
+        self.weight_vertices = {}
+
 
     def add_graf_vertex(self, *args):
         for vertex in args:
             if isinstance(vertex, Vertex):
-                self.vertices[vertex.name] = vertex.neighbors
+                self.vertices[vertex] = vertex.neighbors
+
+    def add_graf_vertex_weight(self, *args):
+        for vertex in args:
+            if isinstance(vertex, Vertex):
+                self.weight_vertices[vertex] = vertex.weight_neighbors
 
     def del_neighbors(self, name, neighbors):
         # print(self.vertices)
         for kay, val in self.vertices.items():
-            if name.name == kay:
+            if name.name == kay.name:
                 for item in val:
                     if item.name == neighbors.name:
                         # print(self.vertices[kay][val.index(item)])
                         self.vertices[kay].remove(item)
-            elif neighbors.name == kay:
+            elif neighbors.name == kay.name:
                 for item in val:
                     # print(item)
                     if item.name == name.name:
@@ -65,9 +78,19 @@ class Graph:
     def del_vertex(self, vertex):
         item = None
         for ver in self.vertices:
-            if ver == vertex.name:
+            if ver.name == vertex.name:
                 item = ver
         self.vertices.pop(item)
+
+    def finding_way(self, start, fin):
+        path = []
+        for neighbor in start.weight_vertices:
+            if neighbor == fin:
+                return f'{neighbor.name} - {fin.name}'
+            else:
+                for val in start.weight_vertices:
+                    pass
+
 
 
 
@@ -86,6 +109,19 @@ if __name__ == '__main__':
     ver1.add_neighbors(ver0, ver2)
     ver2.add_neighbors(ver1, ver0)
     ver3.add_neighbors(ver0)
+
+    ver0.add_weight(1, 1)
+    ver0.add_weight(2, 2)
+    ver0.add_weight(3, 3)
+
+    ver1.add_weight(0, 4)
+    ver1.add_weight(2, 5)
+
+    ver2.add_weight(1, 6)
+    ver2.add_weight(0, 7)
+
+    ver3.add_weight(0, 8)
+
     # ver0.del_neighbors(1)
     # print(ver0.neighbors)
 
@@ -93,8 +129,11 @@ if __name__ == '__main__':
     # print(ver2.neighbors)
     # print(ver3.neighbors)
 
+
     graph = Graph()
     graph.add_graf_vertex(ver0, ver1, ver2, ver3)
-    graph.del_vertex(ver1)
+    graph.add_graf_vertex_weight(ver0, ver1, ver2, ver3)
+    # graph.del_vertex(ver1)
     # graph.del_neighbors(ver0, ver1)
     print(graph.vertices)
+    print(graph.weight_vertices)
