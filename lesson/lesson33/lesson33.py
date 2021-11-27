@@ -19,19 +19,20 @@
 import os
 import json
 import shutil
+from pathlib import Path
 
 class FileManage:
 
     def __init__(self):
         self.path = os.path.join(os.getcwd())
         self.my_listdir = os.listdir(self.path)
-        self.del_file = []
+        self.del_file_list = []
 
     def del_file_dir(self, *args):
         for item in self.my_listdir:
             for val in args:
                 if item == val:
-                    self.del_file.append(self.my_listdir.pop(self.my_listdir.index(item)))
+                    self.del_file_list.append(self.my_listdir.pop(self.my_listdir.index(item)))
 
     def print_tree_dir(self, path=os.path.join(os.getcwd())):
         list_d = os.listdir(path)
@@ -71,6 +72,16 @@ class FileManage:
         path_dir = os.path.join(os.getcwd(), str(new_dir), str(name))
         shutil.move(path_name, path_dir)
 
+    def del_file(self, name):
+        path = os.path.abspath(name)
+        print(path)
+        if os.path.isfile(path):
+            os.remove(path)
+        else:
+            raise FileNotFoundError('No file!!!')
+
+
+
 
 
 
@@ -88,8 +99,8 @@ if __name__ == '__main__':
     # file_manager.del_dir('test.txt')
     # file_manager.new_file('testtest.txt')
     # file_manager.rename_file('testtest.txt', 'test4.txt')
-    file_manager.move_file('test2.txt', 'test_dir')
-
+    # file_manager.move_file('test1.txt', 'test_dir')
+    file_manager.del_file('test.txt')
 
 
     print(os.listdir(file_manager.path))
