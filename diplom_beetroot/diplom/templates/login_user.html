@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block header %}
+    <h2>login</h2>
+{% endblock %}
+
+{% block form %}
+    {% if val %}
+        <h3>OK</h3>
+    {% else %}
+        <form method="post">
+            <input name="login">
+            <br>
+            <input type="password" name="password">
+            <br>
+            <input type="submit" value="Add">
+        </form>
+    {% endif %}
+{% endblock %}
+
+{% block test %}{% endblock %}
