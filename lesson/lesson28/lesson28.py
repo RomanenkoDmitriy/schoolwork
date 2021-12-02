@@ -17,8 +17,6 @@
 #     Кожен об'єкт класу має також атрибут id - унікальний ідентифікатор користувача в системі.
 
 
-
-
 # 2. Реалізувати відповідні методи для класу Person:
 #     - Для кожного зі списків (контакти, навички, досвід роботи) мають бути реалізовані методи додавання (add),
 #     видалення (delete) та оновлення (update) елементів списку. Для реалізації цих методів можливо буде необхідне додавання вспоміжних
@@ -44,8 +42,10 @@ import os
 import json
 import operator
 
+
 class Skill:
     list_skill = []
+
     def __init__(self, category, name, experience, level):
         self.category = category
         self.name = name
@@ -60,7 +60,6 @@ class Skill:
         for skill in dict_skills:
             setattr(obj, skill, dict_skills[skill])
         return obj
-
 
     @property
     def category(self):
@@ -115,6 +114,7 @@ class Contact:
             setattr(obj, contact, dict_contacts[contact])
         return obj
 
+
 class JobExperience:
 
     def __init__(self, start_date, end_date, company, position):
@@ -130,8 +130,8 @@ class JobExperience:
             setattr(obj, experience, dict_experience[experience])
         return obj
 
-class Person:
 
+class Person:
     list_per = []
 
     def __init__(self, last_name, first_name, birth_date):
@@ -150,7 +150,6 @@ class Person:
     def __repr__(self):
         return f'{self.first_name} {self.last_name}'
 
-
     @classmethod
     def add_person_obj(cls, dict_person):
 
@@ -166,7 +165,6 @@ class Person:
             if person in ['contact', 'skills', 'experience']:
                 setattr(obj, person, [method_dict[person](i) for i in dict_person[person]])
         return obj
-
 
     def add_contact(self, contact_type, value):
         self.contact.append(Contact(contact_type, value))
@@ -250,8 +248,8 @@ class Person:
             list_skills.append({skill.category: skill_category})
         return list_skills
 
-#     - Реалізувати метод, який сортує досвід роботи персони від найбільш актуального до найбільш давнього
-#     (останній досвід роботи йде першим у відсортованому списку, найбільш давній - останнім)
+    #     - Реалізувати метод, який сортує досвід роботи персони від найбільш актуального до найбільш давнього
+    #     (останній досвід роботи йде першим у відсортованому списку, найбільш давній - останнім)
 
     def sort_experience(self):
         return sorted(self.experience, key=operator.attrgetter('end_data'), reverse=True)
@@ -270,7 +268,6 @@ per = Person('Petrov', 'Petr', 23)
 per1 = Person('Vasilev', 'Vasilii', 23)
 per2 = Person('Hokin', 'Bob', 23)
 if __name__ == '__main__':
-
     per = Person('asdf', 'asdf', 23)
     per1 = Person('asdf', 'asdf', 23)
     per2 = Person('asdf', 'asdf', 23)
@@ -289,15 +286,15 @@ if __name__ == '__main__':
     per.add_experience(26, 38, 'cvb', 'jun')
 
     val = {"last_name": "asdf", "first_name": "asdf", "birth_date": 23,
-          "contact": [{"_contact_type": "phone", "value": 4567},
-                      {"_contact_type": "phone", "value": 78900987}],
-          "skills": [{"_category": "technologies", "name": "asdfg", "experience": 1, "_level": "junior", "id": 1},
-                     {"_category": "technologies", "name": "vbnm", "experience": 2, "_level": "junior", "id": 2}],
-          "experience": [{"start_data": 23, "end_data": 34, "company": "asd", "position": "jun"},
-                         {"start_data": 23, "end_data": 34, "company": "fgh", "position": "jun"},
-                         {"start_data": 23, "end_data": 34, "company": "jhk", "position": "jun"},
-                         {"start_data": 23, "end_data": 34, "company": "cvb", "position": "jun"}],
-          "id": 1}
+           "contact": [{"_contact_type": "phone", "value": 4567},
+                       {"_contact_type": "phone", "value": 78900987}],
+           "skills": [{"_category": "technologies", "name": "asdfg", "experience": 1, "_level": "junior", "id": 1},
+                      {"_category": "technologies", "name": "vbnm", "experience": 2, "_level": "junior", "id": 2}],
+           "experience": [{"start_data": 23, "end_data": 34, "company": "asd", "position": "jun"},
+                          {"start_data": 23, "end_data": 34, "company": "fgh", "position": "jun"},
+                          {"start_data": 23, "end_data": 34, "company": "jhk", "position": "jun"},
+                          {"start_data": 23, "end_data": 34, "company": "cvb", "position": "jun"}],
+           "id": 1}
     person9 = Person.add_person_obj(val)
     print(person9.skills[0].name)
 
@@ -327,7 +324,3 @@ if __name__ == '__main__':
     #     print(m)
     # for item in per.contact:
     #     print(item)
-
-
-
-

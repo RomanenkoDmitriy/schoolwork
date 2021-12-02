@@ -34,15 +34,15 @@ class User:
         self._password = password
         self.user_hash = hash(self)
 
-    def add_token(self):
-        self.token = True
-
-    def add_base(self):
-        path = os.path.join(os.getcwd(), 'data_base')
-        con = sqlite3.connect(f'{path}users.db')
-        con.execute("""CREATE TABLE IF NOT EXISTS users(
-            userid 
-        """)
+    # def add_token(self):
+    #     self.token = True
+    #
+    # def add_base(self):
+    #     path = os.path.join(os.getcwd(), 'data_base')
+    #     con = sqlite3.connect(f'{path}users.db')
+    #     con.execute("""CREATE TABLE IF NOT EXISTS users(
+    #         userid
+    #     """)
 
 
 
