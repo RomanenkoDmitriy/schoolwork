@@ -15,9 +15,9 @@
     </form>
 {% endblock %}
 
-{% block my_test %}
-        {% for post in user_posts %}
-            <h3>{{post.title}}</h3>
-            <p>{{post.content}}</p>
-        {% endfor %}
+{% block my_tests %}
+    {% for post in test %}
+        <h3>{{post.title}}</h3>
+        <p>{{post.content}}</p>
+    {% endfor %}
 {% endblock %}

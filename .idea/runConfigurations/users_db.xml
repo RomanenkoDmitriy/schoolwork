@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="users.db" type="DatabaseScript" editBeforeRun="true" nameIsGenerated="true">
+    <script-file value="$PROJECT_DIR$/diplom_beetroot/diplom/data_base/users.db" />
+    <script-mode>FILE</script-mode>
+    <data-source id="470922d4-6c0b-4d1e-a7da-f6d0ea3718dd" />
+    <data-source id="7fc05eb7-79d2-45a3-af05-062b072c5021" />
+    <method v="2" />
+  </configuration>
+</component>

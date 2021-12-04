@@ -15,6 +15,7 @@
 # При кліку на кнопку Create новий пост має бути створено. Також на цій сторінці показуються всі існуючі пости користувача,
 # відсортовані від найновіших до найстаріших. Усі пости користувача зберігаються у файлі data/<nickname>_posts.json.
 # При створенні нового поста він також додається до цього файлу.
+# 5. Має бути присутня сторінка /news, де будуть відображатися всі пости всіх користувачів, відсортовані від найновіших до найстаріших
 
 from flask import Flask, request, render_template, redirect, abort, url_for
 from PIL import Image
@@ -22,6 +23,7 @@ import requests
 import os
 
 from .users import User
+from .utils import search_user
 
 app = Flask(__name__)
 
@@ -38,6 +40,9 @@ def index():
             abort(404)
         new_user.dump_json()
     return render_template('index.html')
+
+
+
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -70,19 +75,33 @@ def nickname(nickname):
         return render_template('user.html', user_email=user.email, user_nickname=user.nickname)
     # return render_template('user.html', user_img=page_user.img)
 
+
 @app.route('/<nickname>/posts', methods=['GET', 'POST'])
 def posts(nickname):
-    us = None
-    for user in User.list_user:
-        if nickname == user.nickname:
-            us = user
+    user = search_user(User.list_user, nickname)
+    # return render_template('posts.html', test=User.list_user)
     if request.method == 'POST':
         tetle = request.form['title']
         content = request.form['content']
-        us.add_posts(tetle, content)
-        user_post_sort = sorted(us.posts, reverse=True)
-    if len(us.posts) > 0:
-        return render_template('posts.html', user_posts=user_post_sort)
-    else:
-        return render_template('posts.html')
+        user.add_posts(tetle, content)
+        user.posts[-1].add_json(nickname)
+        user_post_sort = sorted(user.posts, reverse=True)
+        # return render_template('posts.html', test=user.posts)
+        if len(user_post_sort) > 0:
+            return render_template('posts.html', test=user_post_sort)
+            return render_template('posts.html', posts=user_post_sort)
+        else:
+            return render_template('posts.html')
     return render_template('posts.html')
+
+
+@app.route('/news')
+def news():
+    list_news = []
+    for user in User.list_user:
+        for post in user.posts:
+            list_news.append(post)
+    list_news.sort(reverse=True)
+    return render_template('news.html', news=list_news)
+
+
