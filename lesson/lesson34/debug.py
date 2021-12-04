@@ -13,9 +13,9 @@ URL2 = 'https://vjoy.cc/wp-content/uploads/2020/09/bezymyannyjkvytstsk.jpg'
 URL3 = 'https://i.pinimg.com/736x/95/30/41/953041070f000d45c05c912005f63724.jpg'
 URL5 = 'https://mirpozitiva.ru/wp-content/uploads/2019/11/1472042719_15.jpg'
 
-def load_image(url, filename='example.jpg'):
+def load_image(url, file_name='example.jpg'):
     with Image.open(requests.get(url, stream=True).raw) as image:
-        image.save(os.path.join(os.getcwd(), filename))
+        image.save(os.path.join(os.getcwd(), file_name))
 
 
 

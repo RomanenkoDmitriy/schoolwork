@@ -5,11 +5,19 @@
 {% endblock %}
 
 {% block form %}
+
     {% for user in users %}
         <ul>
             <li>{{user.login}}</li>
         </ul>
     {% endfor %}
+
+    {% for user in user_db %}
+        <ul>
+            <li>{{user.login}}</li>
+        </ul>
+    {% endfor %}
+
 {% endblock %}
 
 {% block test %}

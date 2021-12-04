@@ -264,9 +264,9 @@ class Person:
         return json.dumps(person_list)
 
 
-per = Person('Petrov', 'Petr', 23)
-per1 = Person('Vasilev', 'Vasilii', 23)
-per2 = Person('Hokin', 'Bob', 23)
+# per = Person('Petrov', 'Petr', 23)
+# per1 = Person('Vasilev', 'Vasilii', 23)
+# per2 = Person('Hokin', 'Bob', 23)
 if __name__ == '__main__':
     per = Person('asdf', 'asdf', 23)
     per1 = Person('asdf', 'asdf', 23)
@@ -296,14 +296,14 @@ if __name__ == '__main__':
                           {"start_data": 23, "end_data": 34, "company": "cvb", "position": "jun"}],
            "id": 1}
     person9 = Person.add_person_obj(val)
-    print(person9.skills[0].name)
+    # print(person9.skills[0].name)
 
     # print(per.sort_experience())
     # exp = per.sort_experience()
     # for e in exp:
     #     print(e.end_data)
 
-    # print(per.skills_category())
+    print(per.skills_category())
     # print(per.skills_category()[0]['technologies'][0].experience)
     # print(per.skills_category()[0]['technologies'][1].experience)
 
