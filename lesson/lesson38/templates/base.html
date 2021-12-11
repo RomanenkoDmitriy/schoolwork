@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% block output %}
+    <div>
+        <nav>
+            <a href="{{url_for()}}">All greetings</a>
+        </nav>
+    </div>
+    {% endblock %}
+    {% block form %}
+        <div>
+            <form method="post">
+                <label>name</label>
+                <input name="name"><br>
+
+                <label>text</label>
+                <input name="text"><br>
+
+                <label>url</label>
+                <input type="url" name="url"><br>
+
+                <input type="submit" value="save">
+            </form>
+        </div>
+    {% endblock %}
+
+    {% if file_name != None %}
+        {% block greeting %}
+            <h3>{{name_greeting}}</h3>
+            <p>{{name_text}}</p>
+            <div>
+                <img src="{{file_name}}" alt="User img">
+            </div>
+        {% endblock %}
+    {% endif %}
+
+
+</body>
+</html>
+

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block output %}
+    {% for greeting in greetings%}
+        <ul>
+            <li>
+                <h3>{{greeting.name}}</h3>
+                <p>{{greeting.text}}</p>
+                <div>
+                    <img src="{{url_for('static', filename={{img}})}}" alt="User img">
+                </div>
+            </li>
+        </ul>
+    {% endfor%}
+{% endblock %}
