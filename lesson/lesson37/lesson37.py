@@ -18,8 +18,6 @@ import json
 from datetime import datetime
 import os
 
-# datetime.today().weekday()
-
 
 class DaySpecialist:
 

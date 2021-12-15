@@ -2,8 +2,8 @@ import json
 
 from ..utils.binary_search import binary_search_id
 
-class Task:
 
+class Task:
     objects = []
 
     def __init__(self, title, _priority=1):

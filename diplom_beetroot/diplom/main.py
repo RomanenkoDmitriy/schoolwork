@@ -1,29 +1,20 @@
 import os
-from datetime import datetime
 
 from flask import Flask, request, render_template, redirect
+from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 
-from .models.user import User, Announcement, ann
+from models.user import User, UserDb
+
 # from .utils.authorization import authorization
 
 app = Flask(__name__)
+
 path_db = os.path.abspath(os.path.join(os.getcwd(), 'data_base'))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://///home/dimon/schoolwork/diplom_beetroot/diplom/data_base/users.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
-
-
-class UserDb(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    login = db.Column(db.String(50), nullable=False)
-    user_hash = db.Column(db.Integer, nullable=False)
-    announcement = db.Column(db.TEXT())
-    img_announcement = db.Column(db.String(100))
-    date = db.Column(db.DateTime, default=datetime.utcnow)
-
-    def __repr__(self):
-        return '<UserDb %r>' % self.id
+manager = LoginManager(app)
 
 
 # db.create_all()

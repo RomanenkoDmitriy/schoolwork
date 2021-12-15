@@ -1,9 +1,36 @@
 import json
 import os
-import sqlite3
+from datetime import datetime
+
+from flask_login import UserMixin
+
+from ..main import db, manager
+
+
+
+class UserDb(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    login = db.Column(db.String(50), nullable=False, unique=True)
+    user_hash = db.Column(db.Integer, nullable=False)
+    announcement = db.Column(db.TEXT())
+    img_announcement = db.Column(db.String(100))
+    date = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __repr__(self):
+        return '<UserDb %r>' % self.id
+
+
+@manager.user_loader
+def load_user(user_id):
+    return UserDb.query.get(user_id)
+
+
+
+
 
 class User:
     list_users = []
+
     def __init__(self, login, _password):
         self.login = login
         self._password = _password
@@ -43,7 +70,6 @@ class User:
     #     con.execute("""CREATE TABLE IF NOT EXISTS users(
     #         userid
     #     """)
-
 
 
 class Announcement:
@@ -94,11 +120,7 @@ if __name__ == '__main__':
     ann1 = ann.load_json(user1.login)
     print(ann1)
 
-
-
-
     # user1.change_login('wwwwww')
     # print(user1.user_hash)
     # user1.change_password(2222)
     # print(user1.user_hash)
-

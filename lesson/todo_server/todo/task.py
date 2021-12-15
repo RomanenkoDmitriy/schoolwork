@@ -1,4 +1,3 @@
-
 from copy import deepcopy
 
 from flask import Blueprint, request, abort, render_template
@@ -9,6 +8,7 @@ from ..utils.bubble_sort import bubble_sort
 from ..utils.insertion_sort import *
 
 bp = Blueprint('task', __name__)
+
 
 @bp.route('/', methods=['GET', 'POST'])
 def task_list():
@@ -26,6 +26,7 @@ def task_list():
             insertion_sort(tasks)
     return render_template('task_list.html', tasks=Task.objects)
 
+
 @bp.route('/<int:task_id>')
 def task_detail(task_id):
     array = [task_id.id for task_id in Task.objects]
@@ -35,9 +36,6 @@ def task_detail(task_id):
         return Task.objects[(task - 1)].to_json()
     else:
         abort(404)
-
-
-
 
     # array = Task.objects
     # if low is None and high is None:
